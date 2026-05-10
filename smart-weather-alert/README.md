@@ -57,3 +57,13 @@ Refresh the containers:
 ### 3. Execute the flow
 
 Execute the flow, enter the threshold temperature And see the report generated.
+
+--------------------
+### Output - 
+
+<img width="705" height="687" alt="Topology" src="https://github.com/user-attachments/assets/98cf48ed-ebfe-4c85-a4b2-60070cce369f" />
+
+<img width="708" height="239" alt="output" src="https://github.com/user-attachments/assets/71c44811-023b-4667-ac31-a3e3b7520d64" />
+
+<img width="531" height="143" alt="discord" src="https://github.com/user-attachments/assets/f7cc972b-0394-4640-8480-b265ec2f07ae" />
+
