@@ -12,7 +12,7 @@ tasks:
     uri: "{{ secret('WEATHER_API_URL') }}"
 
   - id: check_heat_wave
-    type: io.kestra.plugin.core.execution.If
+    type: io.kestra.plugin.core.flow.If
     condition: "{{ json(outputs.fetch_weather.body).current.temperature_2m > inputs.threshold_temp }}"
     then:
       - id: heat_alert_log
