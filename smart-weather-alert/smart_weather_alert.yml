@@ -1,0 +1,34 @@
+id: smart_weather_alert
+namespace: company.team
+
+inputs:
+  - id: threshold_temp
+    type: FLOAT
+    defaults: 35.0
+
+tasks:
+  - id: fetch_weather
+    type: io.kestra.plugin.core.http.Request
+    uri: "{{ secret('WEATHER_API_URL') }}"
+
+  - id: check_heat_wave
+    type: io.kestra.plugin.core.execution.If
+    condition: "{{ json(outputs.fetch_weather.body).current.temperature_2m > inputs.threshold_temp }}"
+    then:
+      - id: heat_alert_log
+        type: io.kestra.plugin.core.log.Log
+        message: "🔥 ALERT: Temp is {{ json(outputs.fetch_weather.body).current.temperature_2m }}°C"
+
+      - id: post_to_webhook
+        type: io.kestra.plugin.core.http.Request
+        method: POST
+        uri: "{{ secret('DISCORD_WEBHOOK') }}"
+        contentType: application/json
+        body: |
+          {
+            "content": "🚨 Kestra Alert: Hyderabad is {{ json(outputs.fetch_weather.body).current.temperature_2m }}°C!"
+          }
+    else:
+      - id: pleasant_log
+        type: io.kestra.plugin.core.log.Log
+        message: "🌤️ No alert. Temp is {{ json(outputs.fetch_weather.body).current.temperature_2m }}°C."
